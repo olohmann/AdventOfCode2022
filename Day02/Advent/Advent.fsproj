@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Advent.fs" />
+    <Compile Include="Advent01.fs" />
+    <Compile Include="Advent02.fs" />
     <Content Include="input.txt" />
     <Compile Include="Program.fs" />
   </ItemGroup>
