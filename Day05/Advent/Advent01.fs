@@ -2,27 +2,17 @@
 open System.Text.RegularExpressions
 
 module Part1 =
-    type Stack = string list
-    let push x contents = x::contents
-    let pop c = 
-        match c with 
-        | top::rest -> 
-            let newStack = rest
-            (top,newStack)
-        | [] -> 
-            failwith "Stack underflow"
-
     let (|Regex|_|) pattern input =
         let m = Regex.Match(input, pattern)
         if m.Success then Some(List.tail [ for g in m.Groups -> g.Value ])
         else None
 
-    let moveBoxes (count: int, fromPos :int, toPos :int, stacks: Stack array) =
+    let moveBoxes (count: int, fromPos :int, toPos :int, stacks: list<string> array) =
         // Mutable array - buuuuuuuuuuuuh!
         for i in 1..count do
-            let (top, rest) = pop stacks[fromPos - 1] 
+            let (top, rest) = stacks[fromPos - 1] |> fun x -> (x |> List.take(1), x|> List.skip(1))
             stacks[fromPos - 1] <- rest
-            stacks[toPos - 1] <- push top stacks[toPos - 1]
+            stacks[toPos - 1] <-  top @ stacks[toPos - 1]
 
     let run(lines : string seq, stacks: list<string> array) =
         lines 
