@@ -16,7 +16,8 @@ module TestData =
 
         [<TestMethod>]
         member this.Task1 () =
-            input |> Seq.iter(fun x -> Assert.AreEqual(Part1.run (fst x), (snd x)))
+            input |> Seq.iter(fun x -> Assert.AreEqual(Part1.run (fst x) 4, (snd x)))
+            Assert.AreEqual(0, 0)
 
         [<TestMethod>]
         member this.Task2 () =

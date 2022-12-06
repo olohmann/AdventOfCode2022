@@ -1,7 +1,7 @@
 ﻿open Advent
 
 let p1 = Part1.run
-let p2 = Part2.run
+let input = Helper.readFile |> Seq.head
 
-printfn "The Answer #1 is: %A" (Helper.readFile |> Seq.head |> p1)
-printfn "The Answer #2 is: %A" (Helper.readFile |> Seq.head |> p2)
+printfn "The Answer #1 is: %A" (p1 input 4)
+printfn "The Answer #2 is: %A" (p1 input 14)
