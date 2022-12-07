@@ -40,10 +40,12 @@ module Part1 =
         let (_, fileSystem) = parseInput(lines |> Seq.toList, "", Map.empty)
         let directories = fileSystem |> Map.filter(fun k v -> v = None) |> Map.keys 
 
-        let directorySizes = directories 
+        let answer1 = directories 
                                 |> Seq.map(fun d -> fileSystem |> Map.filter(fun k v -> k.StartsWith(d)) |> Seq.sumBy(fun x -> if x.Value = None then 0 else x.Value.Value))
                                 |> Seq.where(fun d -> d <= 100000)
                                 |> Seq.sum
+
+        printfn "Answer #1: %i" answer1 
 
         let totalUsed = fileSystem 
                                 |> Seq.sumBy(fun x -> if x.Value = None then 0 else x.Value.Value)
@@ -52,51 +54,16 @@ module Part1 =
         let totalRequired = 30000000
         let stillFree = totalSize - totalUsed 
         let additionalReq = stillFree - totalRequired
-        // 7gb - 4GB = 3DB REST
 
         let totalUsed = directories 
                                 |> Seq.map(fun d -> (d, fileSystem |> Map.filter(fun k v -> k.StartsWith(d)) |> Seq.sumBy(fun x -> if x.Value = None then 0 else x.Value.Value)))
                                 |> Seq.map(fun x -> (fst x, (snd x, snd x + additionalReq)))
                                 |> Seq.filter(fun x ->  snd (snd x) > 0)
                                 |> Seq.sortBy(fun x -> snd (snd x))
- 
-        
-        (*
-        |> Seq.map(
-            fun k -> fileSystem 
-            |> Map.filter(fun kk vv -> kk.StartsWith(k)) 
-            |> Map.values 
-            |> Seq.sum))
-            *)
 
-        //printfn "Current Directory: %s" currentDir
-        //printfn "%A" (directorySizes)
-        printfn "%A" (totalUsed |> Seq.toArray)
+        // #1: 1307902
+        // #2: [|("/csmqbhjv/mtmhst/wqlf/jswfprpl/", (7068748, 20662)); 
+        printfn "Answer #2: %A" (totalUsed |> Seq.take(1))
         0
 
  
-(*
-    type FileTree =
-        | File of string * int
-        | Directory of string * FileTree list
-
-    let generatePadding (indent: int) =
-        match indent with 
-        | 0 -> ""
-        | _ -> seq { 1 .. indent } |> Seq.map(fun _ -> " ") |> String.concat("") 
-
-    let rec printFiles (tree: FileTree, indent: int) =
-        match tree with
-        | File(name, size) ->
-            printfn "%s%s (file, size=%i)" (generatePadding indent)  name size 
-        | Directory(name, children) ->
-            printfn "%s%s (dir)" (generatePadding indent) name 
-            children |> List.iter(fun x -> printFiles  (x, indent + 2))
-
-    let cmd_cd () =
-        match tree with
-        | File(name, size) ->
-            printfn "%s%s (file, size=%i)" (generatePadding indent)  name size 
-        | Directory(name, children) ->
-*)
-
