@@ -9,7 +9,9 @@
     <Compile Include="Helper.fs" />
     <Compile Include="Advent02.fs" />
     <Compile Include="Advent01.fs" />
-    <Content Include="input.txt" />
+    <Content Include="input.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="Program.fs" />
   </ItemGroup>
 
